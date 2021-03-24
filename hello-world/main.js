@@ -8,7 +8,7 @@ const url = require("url");
 
 let win;
 
-function creatWindow () {
+function createWindow () {
     win = new BrowserWindow();
     win.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
@@ -22,7 +22,7 @@ function creatWindow () {
     })
 }
 
-app.on('ready', creatWindow);
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
@@ -32,6 +32,6 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
     if (win == null) {
-        creatWindow()
+        createWindow()
     }
 });

@@ -9,7 +9,7 @@ const url = require("url");
 
 let winone, winTwo;
 
-function creatWindow () {
+function createWindow () {
     winone = new BrowserWindow();
     winTwo = new BrowserWindow();
 
@@ -36,7 +36,7 @@ function creatWindow () {
     })
 }
 
-app.on('ready', creatWindow);
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
@@ -46,6 +46,6 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
     if (win == null) {
-        creatWindow()
+        createWindow()
     }
 });
