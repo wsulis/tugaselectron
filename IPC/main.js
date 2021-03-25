@@ -10,34 +10,42 @@ const dialog = electron.dialog
 
 let win;
 
-function createWindow () {
+function createWindow() {
     win = new BrowserWindow();
+    
     win.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
-        protocol: 'file',
+        protocol: 'file:',
         slashes: true
     }));
 
+    let contents = win.webContents
+    console.log(contents)
+
     win.webContents.openDevTools();
     win.on('closed', () => {
-        win = null;
-    })
+        win = null
+    });
 }
 
-ipc.on('open-error-dialog', function(event){
-    dialog.showErrorBox('An error message', 'Demo of an error message')
+ipc.on('async-message', function(event, arg){
+    event.sender.send('async-message-reply', 'Main process async message reply.');
+})
+
+ipc.on('sync-message', function(event, arg){
+    event.returnValue = 'sync-reply';
 })
 
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
-        app.quit()
+        app.quit();
     }
-})
+});
 
 app.on('activate', () => {
     if (win == null) {
-        createWindow()
+        createWindow();
     }
 });
